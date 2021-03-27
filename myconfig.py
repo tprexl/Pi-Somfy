@@ -157,7 +157,10 @@ class MyConfig (MyLog):
                 elif return_type == float:
                     return self.config.getfloat(self.Section, Entry)
                 elif return_type == int:
-                    return self.config.getint(self.Section, Entry)
+                    if self.config.get(self.Section, Entry) == 'None':
+                        return None
+                    else:             
+                        return self.config.getint(self.Section, Entry)
                 else:
                     self.LogErrorLine("Error in MyConfig:ReadValue: invalid type:" + str(return_type))
                     return default
