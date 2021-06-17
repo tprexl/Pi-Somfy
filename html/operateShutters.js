@@ -126,6 +126,8 @@ function prettyPrintSchedule(evt, shutters) {
       if (percentage > 0) {
          outstr += "for "+percentage+"% "
       } 
+   } else if (evt['shutterAction'].substring(0, 4) == "stop") {
+      outstr += "stop (my) ";
    }
 
    if (evt['shutterIds'].length == 1) {
@@ -350,6 +352,7 @@ function setupTableSchedule () {
         }
         if (evt['shutterAction'].substring(0, 2) == "up") {
            thisRow.find('#scheduleEdit .shutterActionUp').removeClass("inactiveDirection");
+           thisRow.find('#scheduleEdit .shutterActionStop').addClass("inactiveDirection");
            thisRow.find('#scheduleEdit .shutterActionDown').addClass("inactiveDirection");
            percentage = parseInt(evt['shutterAction'].substring(2));
            if (percentage > 0) {
@@ -363,6 +366,7 @@ function setupTableSchedule () {
            }
         } else if (evt['shutterAction'].substring(0, 4) == "down") {
            thisRow.find('#scheduleEdit .shutterActionDown').removeClass("inactiveDirection");
+           thisRow.find('#scheduleEdit .shutterActionStop').addClass("inactiveDirection");
            thisRow.find('#scheduleEdit .shutterActionUp').addClass("inactiveDirection");
            percentage = parseInt(evt['shutterAction'].substring(4));
            if (percentage > 0) {
@@ -374,6 +378,11 @@ function setupTableSchedule () {
            } else {
               thisRow.find('.durationList').val(0)           
            }
+        } else if (evt['shutterAction'].substring(0, 4) == "stop") {
+           thisRow.find('#scheduleEdit .shutterActionDown').addClass("inactiveDirection");
+           thisRow.find('#scheduleEdit .shutterActionStop').removeClass("inactiveDirection");
+           thisRow.find('#scheduleEdit .shutterActionUp').addClass("inactiveDirection");
+           thisRow.find('.durationList').val(0)
         }
 
         shutterIds.sort(function(a, b) { return config.Shutters[a].toLowerCase() > config.Shutters[b].toLowerCase()}).forEach(function(shutter) {
@@ -663,8 +672,22 @@ function setupListeners() {
          $(this).parent().parent().find('.repeatValue[data-optionvalue="'+prev+'"]').addClass("in").show();
     });
 
-    $(document).on('click', ".shutterAction", function() {
-      $(this).parent().find('.shutterAction').toggleClass("inactiveDirection");
+    $(document).on('click', ".shutterActionUp", function() {
+         $(this).parent().find('.shutterActionUp').removeClass("inactiveDirection");
+         $(this).parent().find('.shutterActionStop').addClass("inactiveDirection");
+         $(this).parent().find('.shutterActionDown').addClass("inactiveDirection");
+    });
+
+    $(document).on('click', ".shutterActionStop", function() {
+         $(this).parent().find('.shutterActionUp').addClass("inactiveDirection");
+         $(this).parent().find('.shutterActionStop').removeClass("inactiveDirection");
+         $(this).parent().find('.shutterActionDown').addClass("inactiveDirection");
+    });
+
+    $(document).on('click', ".shutterActionDown", function() {
+         $(this).parent().find('.shutterActionUp').addClass("inactiveDirection");
+         $(this).parent().find('.shutterActionStop').addClass("inactiveDirection");
+         $(this).parent().find('.shutterActionDown').removeClass("inactiveDirection");
     });
 
 

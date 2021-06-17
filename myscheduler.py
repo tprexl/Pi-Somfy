@@ -28,7 +28,7 @@ class Event:
     ## repeatValue: Date in format "YYYY/MM/DD" or Array ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     ## timeType: String: 'clock' or 'astro' are valid values
     ## timeValue: String: Time in format "HH:MM" or values 'sunset' or 'sunrise' or 'sunset+MIN', 'sunset-MIN', 'sunrise+MIN', 'sunrise-MIN'
-    ## shutterAction: String: 'up' or 'down' are valid values. If this is followed by an integer, this indicates the duration of the operation
+    ## shutterAction: String: 'up', 'down' or 'stop' (My-Position) are valid values. If this is followed by an integer, this indicates the duration of the operation
     ## shutterIds: Array of shutterIds to operate
 
     def __init__(self,active,repeatType,repeatValue,timeType,timeValue,shutterAction,shutterIds):
@@ -59,7 +59,7 @@ class Event:
         self.timeValue = timeValue
 
         # if not ((isinstance(shutterAction, str)) and ((shutterAction.startswith("up") or shutterAction.startswith("down")))):
-        if not ((shutterAction.startswith("up") or shutterAction.startswith("down"))):
+        if not ((shutterAction.startswith("up") or shutterAction.startswith("down") or shutterAction.startswith("stop"))):
             raise ValueError("%s is not a valid value for ACTION." % shutterAction)
         self.shutterAction = shutterAction
 
@@ -346,6 +346,8 @@ class Scheduler(threading.Thread, MyLog):
                                         for i in range(self.config.SendRepeat):
                                             self.shutter.lower(shutterId)
                                             time.sleep(5)
+                                elif (eventDetail[1].startswith("stop")):
+                                    self.shutter.stop(shutterId)
                             except:
               	                self.LogError ("Error: cannot open "+shutterId)
               	                self.LogError (traceback.format_exc())
