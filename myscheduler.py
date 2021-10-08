@@ -1,18 +1,14 @@
 #!/usr/bin/python3
 
-import sys, re, argparse
-import fcntl
-import os
-import re
-import locale
-import time
 import datetime
-import ephem
-import pigpio
-import socket
-import signal, atexit, subprocess, traceback
-import logging, logging.handlers
+import locale
+import re
+import sys
 import threading
+import time
+import traceback
+
+import ephem
 
 try:
     from mylog import MyLog

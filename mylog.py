@@ -1,6 +1,9 @@
 #!/usr/bin/python3
-import os, sys, time, json
-import logging, logging.handlers
+import logging
+import logging.handlers
+import os
+import sys
+
 
 #---------- SetupLogger --------------------------------------------------------
 def SetupLogger(logger_name, log_file, level=logging.DEBUG, stream = False):

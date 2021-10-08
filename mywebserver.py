@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 import logging
+import sys
+
 try:
     from flask import Flask, render_template, request, Response, jsonify, json
 except Exception as e1:
