@@ -62,7 +62,7 @@ class Shutter(MyLog):
         if self.config.TXGPIO != None:
             self.TXGPIO = self.config.TXGPIO  # 433.42 MHz emitter
         else:
-            self.TXGPIO = 6  # 433.42 MHz emitter on GPIO 4
+            self.TXGPIO = 4  # 433.42 MHz emitter on GPIO 4
         self.frame = bytearray(7)
         self.callback = []
         self.shutterStateList = {}
