@@ -319,7 +319,7 @@ class FlaskAppWrapper(MyLog):
             import ssl
             from OpenSSL import crypto
             self.LogInfo("Starting secure WebServer on Port " + str(self.config.HTTPSPort))
-            http_server = WSGIServer(('', self.config.HTTPSPort), app)
+            http_server = WSGIServer(('', self.config.HTTPSPort), self.app)
             http_server.serve_forever()
             # TODO
             # add certificate support
@@ -328,7 +328,7 @@ class FlaskAppWrapper(MyLog):
             #              ssl_context=self.generate_adhoc_ssl_context(), use_reloader=False, debug=False)
         else:
             self.LogInfo("Starting WebServer on Port " + str(self.config.HTTPPort))
-            http_server = WSGIServer(('', self.config.HTTPPort), app)
+            http_server = WSGIServer(('', self.config.HTTPPort), self.app)
             http_server.serve_forever()
             # self.app.run(host="0.0.0.0", threaded=True, port=self.config.HTTPPort, use_reloader=False, debug=False)
         self.LogInfo("Stopping WebServer")
