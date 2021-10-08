@@ -321,9 +321,14 @@ class FlaskAppWrapper(MyLog):
             self.LogInfo("Starting secure WebServer on Port " + str(self.config.HTTPSPort))
             http_server = WSGIServer(('', self.config.HTTPSPort), app)
             http_server.serve_forever()
+            # TODO
+            # add certificate support
+
             # self.app.run(host="0.0.0.0", port=self.config.HTTPSPort, threaded=True,
             #              ssl_context=self.generate_adhoc_ssl_context(), use_reloader=False, debug=False)
         else:
             self.LogInfo("Starting WebServer on Port " + str(self.config.HTTPPort))
-            self.app.run(host="0.0.0.0", threaded=True, port=self.config.HTTPPort, use_reloader=False, debug=False)
+            http_server = WSGIServer(('', self.config.HTTPPort), app)
+            http_server.serve_forever()
+            # self.app.run(host="0.0.0.0", threaded=True, port=self.config.HTTPPort, use_reloader=False, debug=False)
         self.LogInfo("Stopping WebServer")
