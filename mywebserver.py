@@ -3,7 +3,7 @@ import logging
 try:
     from flask import Flask, render_template, request, Response, jsonify, json
 except Exception as e1:
-    print("\n\nThis program requires the Flask library. Please see the project documentation at https://github.com/jgyates/genmon.\n")
+    print("\n\nThis program requires the Flask library. Please see the project documentation at https://github.com/Nickduino/Pi-Somfy.\n")
     print("Error: " + str(e1))
     sys.exit(2)
 
