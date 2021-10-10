@@ -2,17 +2,10 @@
 # -*- coding: utf-8 -*-
 #
 
-import sys, re, argparse
-import fcntl
-import os
-import re
-import time
-import locale
-import pigpio
-import socket
-import signal, atexit, subprocess, traceback
-import threading
 import json
+import sys
+import threading
+import time
 from copy import deepcopy
 
 try:
